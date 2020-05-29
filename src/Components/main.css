@@ -1,0 +1,136 @@
+@font-face {
+  font-family: 'MyWebFont';
+  src: url("../fonts/bebasneue-regular-webfont.woff2") format("woff2"), url("../fonts/bebasneue-regular-webfont.woff") format("woff");
+}
+
+body {
+  background-color: #191716;
+  font-family: 'MyWebFont', Fallback, sans-serif;
+}
+
+/* 
+ ---------------------------------------------------------
+ ----------------------guitar neck------------------------
+ ---------------------------------------------------------
+*/
+.guitar-neck {
+  border: 1px solid #3b28cc;
+  width: 1100px;
+  height: 200px;
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 
+ ---------------------------------------------------------
+ ----------functional layer strings and frets-------------
+ ---------------------------------------------------------
+*/
+.strings {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.strings .gString {
+  width: 100%;
+  height: 33px;
+}
+
+.strings .gString canvas {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.strings .frets {
+  position: absolute;
+  width: 100%;
+  height: 33px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.strings .frets .fret {
+  display: inline-block;
+  height: inherit;
+  width: 41px;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+}
+
+.strings .frets .fret .fretDot {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  left: 5px;
+  top: 5px;
+  background: #191716;
+  background: linear-gradient(20deg, #191716 21%, #23ce6b 100%);
+  border: 1px solid #191716;
+  border-radius: 20px;
+  background-color: #3b28cc;
+  display: none;
+  color: #191716;
+  font-style: bold;
+  line-height: 30px;
+  font-size: 15px;
+  margin: 0;
+  text-align: center;
+  cursor: default;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -o-user-select: none;
+}
+
+/* 
+ ---------------------------------------------------------
+ -------visual background layer for fret circles----------
+ ---------------------------------------------------------
+*/
+.visual {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.visual .fret {
+  display: inline-block;
+  height: 100%;
+  width: 40px;
+  border-right: 1px solid #6e2594;
+  -webkit-box-shadow: 0px 0px 5px #6e2594;
+          box-shadow: 0px 0px 5px #6e2594;
+  overflow: hidden;
+}
+
+.visual .fret svg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.visual .fret0 {
+  background-color: #3b28cc;
+  border-right: 1px solid #3b28cc !important;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.visual .fret12 svg {
+  position: relative;
+  width: 100%;
+  height: 50%;
+}
+
+.visual .fret24 svg {
+  position: relative;
+  width: 100%;
+  height: 50%;
+}
+/*# sourceMappingURL=main.css.map */
