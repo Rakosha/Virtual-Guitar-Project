@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Fret from "./Fret";
-import anime from "animejs/lib/anime.es.js";
+
 export class Frets extends Component {
   notes = [
     "c1",
@@ -100,8 +100,9 @@ export class Frets extends Component {
     return this.notes.slice(index, index + 25);
   };
 
-  setActive = (id) => {
-    this.props.fretPressed(id);
+  setActive = (fret) => {
+    this.props.fretPressed(fret);
+    const id = fret.id;
     this.setState({
       fret: this.state.frets.map((cfret) => {
         if (cfret.id === id) {

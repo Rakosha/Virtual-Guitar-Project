@@ -1,10 +1,21 @@
-import React, { Component } from "react";
-
+import React from "react";
+import $ from "jquery";
 class Canvas extends React.Component {
-  componentDidUpdate() {}
+  componentDidMount(props) {
+    this.updateCanvas(props);
+  }
 
-  componentDidMount() {
+  componentDidUpdate(props) {
+    this.updateCanvas(props);
+
+    console.log(this.props.fretPressed);
+  }
+
+  updateCanvas(props) {
+    this.fretPressed = this.props.fretPressed;
+
     const canvas = this.refs.canvas;
+    const fretActive = this.props.fretPressed.isActive;
     //GSTRING main function =====================================================================
     function GString(ref, startPoint, endPoint) {
       //ctor
@@ -22,15 +33,12 @@ class Canvas extends React.Component {
       this.finishWave = false;
       //add event listener
       var self = this;
-      this.canvas.addEventListener(
-        "click",
-        function (pos) {
-          console.dir(pos);
-          self.click(self, pos);
-        },
-        false
-      );
+
+      self.click(self);
     }
+
+    const fretPressed = this.props.fretPressed.id;
+
     //drawArc function =======================================================================
     GString.prototype.drawArc = function (
       startPoint,
@@ -54,9 +62,30 @@ class Canvas extends React.Component {
         (startPoint.y + thirdPoint.y) / 2;
       var r = dist(centerX, centerY, startPoint.x, startPoint.y);
       var angle = Math.atan2(centerX - startPoint.x, centerY - startPoint.y);
+
+      ctx.beginPath();
+
+      //MYLINE ----------------------------------------------------=================
+
+      if (fretActive) {
+        // Staring point (10,45)
+        ctx.strokeStyle = "#FFFFFF";
+
+        ctx.moveTo(0, 20);
+        // End point (180,47)
+        ctx.lineTo(fretPressed * 41 + 5, 20);
+        // Make the line visible
+        var gradient = ctx.createLinearGradient(100, 100, 500, 200);
+        gradient.addColorStop("0", "magenta");
+        gradient.addColorStop("0.5", "blue");
+        gradient.addColorStop("1.0", "#23CE6B");
+        ctx.strokeStyle = gradient;
+        ctx.stroke();
+      }
+
       if (!angle || this.finishWave) {
         ctx.beginPath();
-        ctx.moveTo(startPoint.x, startPoint.y); //change startPoint.x to this.controlPoint.x to start the line where it was pressed
+        ctx.moveTo(startPoint.x, startPoint.y);
         ctx.lineTo(endPoint.x, endPoint.y);
         //updown ANIMATION -----------------------------------------
       } else if (!this.finishWave) {
@@ -102,7 +131,8 @@ class Canvas extends React.Component {
       if (
         r > 2400 &&
         this.controlPoint.x > this.startPoint.x &&
-        this.controlPoint.x < this.endPoint.x
+        this.controlPoint.x < this.endPoint.x &&
+        fretActive
       ) {
         this.drawArc(
           this.startPoint,
@@ -139,7 +169,7 @@ class Canvas extends React.Component {
       // update
     };
     //---------------------------------------------------------------------ACTION LISTENER
-    GString.prototype.click = function (self, pos) {
+    GString.prototype.click = function (self) {
       // self.controlPoint.x = pos.layerX;
       // self.controlPoint.y = pos.layerY;
       self.controlPoint.x = 1074; //CHANGED
@@ -176,11 +206,19 @@ class Canvas extends React.Component {
       this.y = y;
     };
 
-    var myString = new GString(
-      this.refs.canvas,
-      new Point(0, 20),
-      new Point(2400, 20)
-    );
+    if (this.props.fretPressed.isActive) {
+      var myString = new GString(
+        this.refs.canvas,
+        new Point(this.props.fretPressed.id * 41 + 5, 20),
+        new Point(2400, 20)
+      );
+    } else {
+      var myString = new GString(
+        this.refs.canvas,
+        new Point(0, 20),
+        new Point(2400, 20)
+      );
+    }
 
     (function animate() {
       // update
