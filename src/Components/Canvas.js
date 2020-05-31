@@ -1,5 +1,5 @@
 import React from "react";
-import $ from "jquery";
+
 class Canvas extends React.Component {
   componentDidMount(props) {
     this.updateCanvas(props);
@@ -8,7 +8,7 @@ class Canvas extends React.Component {
   componentDidUpdate(props) {
     this.updateCanvas(props);
 
-    console.log(this.props.fretPressed);
+    // console.log(this.props.fretPressed);
   }
 
   updateCanvas(props) {

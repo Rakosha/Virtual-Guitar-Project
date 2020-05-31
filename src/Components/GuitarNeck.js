@@ -14,14 +14,14 @@ export class GuitarNeck extends Component {
             id: 1,
             tuning: "e4",
             isActive: false,
-            notePressed: "e5",
+            notePressed: "e4",
             fretPressed: 0,
           },
           {
             id: 2,
             tuning: "b3",
             isActive: false,
-            notePressed: "b4",
+            notePressed: "b3",
             fretPressed: 0,
           },
           {
